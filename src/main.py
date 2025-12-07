@@ -24,8 +24,6 @@ for file, scale, reference in zip(files, scales, references):
     # TODO make this less cheaty, it has a hardcoded offset to count the borders around the bar
     pr = pixel_ratio(img, scale) # pixels per nm
     
-    # TODO consider adding an expected_wire_size that can be used on an image-by-image basis if necessary, to choose good sigma and min_freq
-    
     expected_wire_size = 0.6 # nm / wire
     expected_wires_per_pixel = (1 / expected_wire_size) * (1 / pr)
     expected_pixels_per_wire = 1 / expected_wires_per_pixel
