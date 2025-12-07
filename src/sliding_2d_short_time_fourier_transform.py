@@ -158,11 +158,9 @@ def sliding_2d_short_time_fourier_transform(
             img_slice = padded_img[y - (gw_h // 2):y + (gw_h // 2) + 1, x - (gw_w // 2):x + (gw_w // 2) + 1]
             img_slice_product = img_slice * gw
             
-            # TODO should the data be centered?
             img_slice_product = img_slice_product - np.mean(img_slice_product)
             freq = extract_dominant_freq(img_slice_product, min_freq)
             
-            # TODO decide to keep/remove angle information. currently unused
             out[out_y,out_x] = freq
     
     # # for visual analysis, could maybe return these values in the future
