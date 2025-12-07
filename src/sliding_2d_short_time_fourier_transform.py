@@ -25,7 +25,7 @@ def get_mask(img):
         elif event == cv2.EVENT_RBUTTONUP:
             erasing = False
         
-        if event in [cv2.EVENT_MOUSEMOVE, cv2.EVENT_LBUTTONDOWN, cv2.EVENT_LBUTTONUP]:
+        if event in [cv2.EVENT_MOUSEMOVE, cv2.EVENT_LBUTTONDOWN, cv2.EVENT_LBUTTONUP, cv2.EVENT_RBUTTONDOWN, cv2.EVENT_RBUTTONUP]:
             x, y = mouse_x, mouse_y
             if painting:
                 cv2.circle(mask, (mouse_x, mouse_y), size, 255, -1)
