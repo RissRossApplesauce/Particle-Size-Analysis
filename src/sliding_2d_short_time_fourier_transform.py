@@ -77,6 +77,7 @@ def gaussian_window(sigma):
 
 def extract_dominant_freq(img, min_freq):
     # FFT
+    img = img - np.mean(img)
     f_transform = np.fft.fft2(img)
     f_shift = np.fft.fftshift(f_transform)
     magnitude = np.abs(f_shift)
@@ -158,7 +159,6 @@ def sliding_2d_short_time_fourier_transform(
             img_slice = padded_img[y - (gw_h // 2):y + (gw_h // 2) + 1, x - (gw_w // 2):x + (gw_w // 2) + 1]
             img_slice_product = img_slice * gw
             
-            img_slice_product = img_slice_product - np.mean(img_slice_product)
             freq = extract_dominant_freq(img_slice_product, min_freq)
             
             out[out_y,out_x] = freq
