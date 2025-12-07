@@ -1,0 +1,26 @@
+[data]
+expected_wire_width = 0.6 # Expected size in nm / wire
+smallest_wire_ratio = 0.8 # Multiplied by expected_wire_width to get a lower bound for wire width
+largest_wire_ratio = 1.2 # Multiplied by expected_wire_width to get an upper bound for wire width
+wires_per_std_dev = 8 # Controls the size of the window that measures wire size in a region. The window is created with a gaussian distribution
+samples_across = 24 # Will populate the image with samples_across^2 samples
+z_score_filter_threshold = 2 # When filtering away outliers, anything more than this many std devs will be removed
+
+
+[app]
+window_size = 800
+next_key = ' '
+
+[scale_bar_detection]
+width_offset = 10 # Added to the detected width, accounts for the black border that is missed by the detection algorithm
+min_area_ratio = 0.0005
+max_area_ratio = 0.01
+min_brightness_threshold = 250
+max_brightness_threshold = 255
+
+[mask_painter]
+default_radius = 125 # in pixels
+paint_color = [255, 255, 0] # Blue, Green, Red
+paint_opacity = 0.4
+scroll_factor = 1.2 # Use 0.8 to invert scroll direction
+
