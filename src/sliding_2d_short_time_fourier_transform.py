@@ -44,7 +44,7 @@ def get_mask(img):
             if size < 2: size = 2
             size = int(size)
     
-    windowName = 'magnitude spectrum'
+    windowName = 'mask'
     cv2.namedWindow(windowName, cv2.WINDOW_NORMAL)
     cv2.resizeWindow(windowName, 1000, 1000)
     cv2.setMouseCallback(windowName, mouse_callback)
