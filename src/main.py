@@ -21,15 +21,17 @@ references = [0.671,0.623,0.632,0.639,0.627,0.613,0.620]
 for file, scale, reference in zip(files, scales, references):
     img = cv2.imread(file, 0)
     mask = get_mask(img)
+    # TODO make this less cheaty, it has a hardcoded offset to count the borders around the bar
     pr = pixel_ratio(img, scale) # pixels per nm
     
-    # TODO determine if sigma should just be dependent on min_freq
-    # ^rationale: if min_freq is always chosen based on expected wire size ((pixels per wire)^-1 * 0.5) and sigma is always chosen based on expected wire size (pixels per wire * ~4), they're redundant
-    sigma = 128 # average wire is about 35 pixels across - this will fit about 16 wires within 2 standard deviations with seems to work well
+    # TODO consider adding an expected_wire_size that can be used on an image-by-image basis if necessary, to choose good sigma and min_freq
+    
+    expected_wire_size = 0.6 # nm / wire
+    expected_wires_per_pixel = (1 / expected_wire_size) * (1 / pr)
+    expected_pixels_per_wire = 1 / expected_wires_per_pixel
+    min_wires_per_pixel = expected_wires_per_pixel * (2 / 3) # goal is to be less any real value but greater than any significant amount of noise
+    sigma = int(expected_pixels_per_wire * 4) # (arbitrary) goal is for 1 std dev to cover ~8 wires
     stride = 64
-    min_freq = 0.015 # with wires being about 35 pixels across, their 'wires per pixel' frequency is around 0.03. divided by 2 to get this number
-    # TODO rename min_freq to something more meaningful
-    freq = sliding_2d_short_time_fourier_transform(img, sigma, stride, min_freq, mask) # wires per pixel
-    print(freq)
+    freq = sliding_2d_short_time_fourier_transform(img, sigma, stride, min_wires_per_pixel, mask) # wires per pixel
     nm_per_wire = (1 / pr) * (1 / freq)
     print(f'{nm_per_wire:.3f} - {reference:.3f}')

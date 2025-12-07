@@ -124,6 +124,7 @@ def sliding_2d_short_time_fourier_transform(
     min_freq, # smallest allowable frequency (in wires per pixel) to be considered a 'result' from the fourier transform. required because fourier transforms give high values for small frequencies
     mask: cv2.typing.MatLike = None, # mask to control which areas solutions are calculated for, must be the same shape as img
 ):
+    # TODO rename min_freq to something more meaningful
     img = cv2.normalize(img.astype(np.float32), None, 0.0, 1.0, cv2.NORM_MINMAX)
     
     if mask is None:
